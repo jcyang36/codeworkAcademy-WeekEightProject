@@ -2,11 +2,11 @@ package com.example.demo.controllers;
 
 import com.cloudinary.utils.ObjectUtils;
 import com.example.demo.configs.CloudinaryConfig;
-import com.example.demo.models.Image;
+import com.example.demo.models.Photo;
 import com.example.demo.models.Meme;
 import com.example.demo.models.User;
-import com.example.demo.repositories.ImageRepository;
 import com.example.demo.repositories.MemeRepository;
+import com.example.demo.repositories.PhotoRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
 import com.example.demo.validators.UserValidator;
@@ -42,8 +42,9 @@ public class HomeController {
 
     @Autowired
     UserRepository userRepository;
+
     @Autowired
-    ImageRepository imageRepository;
+    PhotoRepository photoRepository;
     @Autowired
     MemeRepository memeRepository;
 
@@ -59,11 +60,11 @@ public class HomeController {
 
     @GetMapping("/upload")
     public String uploadForm(Model model){
-        model.addAttribute("image", new Image());
+        model.addAttribute("image", new Photo());
         return "upload";
     }
     @PostMapping("/upload")
-    public String singleImageUpload(@RequestParam("file") MultipartFile file,  RedirectAttributes redirectAttributes,@ModelAttribute Image image, Model model){
+    public String singleImageUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, @ModelAttribute Photo photo, Model model){
         if (file.isEmpty()){
             model.addAttribute("message","Please select a file to upload");
             return "upload";
@@ -75,10 +76,10 @@ public class HomeController {
             model.addAttribute("imageurl", uploadResult.get("url"));
             String filename = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
             model.addAttribute("sizedimageurl", cloudc.createUrl(filename,300,400, "scale"));
-            image.setImgname(filename);
-            image.setImgsrc((String)  cloudc.createUrl(filename,300,400, "scale"));
-            imageRepository.save(image);
-            model.addAttribute("imageList", imageRepository.findAll());
+            photo.setPhotoname(filename);
+            photo.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale"));
+            photoRepository.save(photo);
+            model.addAttribute("photoList", photoRepository.findAll());
         } catch (IOException e){
             e.printStackTrace();
             model.addAttribute("message", "Sorry I can't upload that!");
@@ -126,15 +127,15 @@ public class HomeController {
     @GetMapping("/meme_maker")
     public String memeMaker(Model model) {
         model.addAttribute("meme", new Meme());
-        model.addAttribute("images", imageRepository.findAll());
+        model.addAttribute("photos", photoRepository.findAll());
         return "meme_maker";
     }
     @RequestMapping("/makememe/{id}")
     public String memeform(@PathVariable("id") int id, Model model)
     {
-        Image img=imageRepository.findOne(id);
+        Photo img=photoRepository.findOne(id);
         Meme meme=new Meme();
-        meme.setImageUrl(img.getImgsrc());
+        meme.setImageUrl(img.getPhotosrc());
         model.addAttribute("meme", meme);
 
 

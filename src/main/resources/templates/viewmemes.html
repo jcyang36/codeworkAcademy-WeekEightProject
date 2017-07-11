@@ -19,7 +19,7 @@
             width: 400px;
             position: relative;
         }
-        #image {
+        #photo {
             position: absolute;
             left: 0;
             top: 0;
@@ -67,7 +67,7 @@
             <div th:text="${ 'memez_memez.herokuapp.com/showmemes/'+{meme.id} }">
             </div>
             <div id="container">
-                <a th:href="@{'/showmeme/'+${meme.id}}"><div id ="image"  th:utext="${meme.imageUrl}">
+                <a th:href="@{'/showmeme/'+${meme.id}}"><div id ="photo"  th:utext="${meme.imageUrl}">
                 </div></a>
 
 
@@ -84,7 +84,7 @@
 
 <!--<div id="container">
 
-    <img id="image" src="https://www.noao.edu/image_gallery/images/d4/androa.jpg" alt="test">Image</img>
+    <img photomage" src="https://www.noao.edu/image_gallery/images/d4/androa.jpg" alt="tePhotomage</img>
     <p id="top">
         Top String Here
     </p>
