@@ -10,6 +10,10 @@ import com.example.demo.repositories.MemeRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
 import com.example.demo.validators.UserValidator;
+import com.google.common.collect.Lists;
+import it.ozimov.springboot.mail.model.Email;
+import it.ozimov.springboot.mail.model.defaultimpl.DefaultEmail;
+import it.ozimov.springboot.mail.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,8 +23,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
@@ -137,12 +143,19 @@ public class HomeController {
 
 
     @PostMapping("/new_meme")
-    public String addMeme(@ModelAttribute Meme meme, Model model) {
+    public String addMeme(@Valid @ModelAttribute("meme")Meme meme, BindingResult result, Model model) {
         model.addAttribute("meme", meme);
+        userValidator.validateCaptions(meme, result);
+        if (result.hasErrors()) {
+            return "meme_maker_maker";
+        }
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Long id =  userRepository.findByUsername(username).getId();
+        User user=userRepository.findByUsername(username);
+        Long id = user.getId();
         meme.setUserId(id.intValue());
         memeRepository.save(meme);
+        meme=memeRepository.findTop1ByUserIdOrderByIdDesc((int) user.getId()).get(0);
+        sendEmailWithoutTemplating(user,meme);
         return "redirect:/memes";
     }
 
@@ -157,12 +170,30 @@ public class HomeController {
         model.addAttribute("memeList", memeRepository.findAll());
         return "viewmemes";
     }
-    @RequestMapping("/showmeme/{id}")
+    @RequestMapping("/showmemes/{id}")
     public String showMeme(@PathVariable("id") long id, Model model)
     {
         Meme meme=memeRepository.findOne(id);
         model.addAttribute("meme",meme);
 
         return "memez";
+    }
+
+    @Autowired
+    public EmailService emailService;
+    public void sendEmailWithoutTemplating(User user, Meme meme){
+        final Email email;
+        try {
+            email = DefaultEmail.builder()
+                    .from(new InternetAddress("bot.orion.bot@gmail.com", "The MemeLord"))
+                    .to(Lists.newArrayList(new InternetAddress(user.getEmail(),user.getUsername())))
+                    .subject("Your Meme, Your Way")
+                    .body("You have created a new meme. Here is the link: memez-memez.herokuapp.com/showmemes/"+meme.getId())
+                    .encoding("UTF-8").build();
+            emailService.send(email);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
     }
 }
