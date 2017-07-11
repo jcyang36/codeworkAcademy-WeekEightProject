@@ -60,7 +60,7 @@ public class HomeController {
 
     @GetMapping("/upload")
     public String uploadForm(Model model){
-        model.addAttribute("image", new Photo());
+        model.addAttribute("photo", new Photo());
         return "upload";
     }
     @PostMapping("/upload")
