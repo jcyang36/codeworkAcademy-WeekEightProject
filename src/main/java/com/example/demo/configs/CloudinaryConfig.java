@@ -30,9 +30,9 @@ public class CloudinaryConfig {
             return null;
         }
     }
-    public String createUrl(String name, int width, int height, String action){
+    public String createUrl(String name, int width, int height, String action, String effect){
         return cloudinary.url()
-                .transformation(new Transformation().width(width).height(height).border("2px_solid_black").crop(action))
+                .transformation(new Transformation().width(width).height(height).effect(effect).border("2px_solid_black").crop(action))
                 .imageTag(name);
     }
 }
