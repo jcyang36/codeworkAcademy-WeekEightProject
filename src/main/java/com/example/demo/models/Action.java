@@ -25,6 +25,7 @@ public class Action {
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinTable
+
     private Set<Photo> photos;
 
     public Set<User> getUsers() {
