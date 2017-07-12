@@ -78,14 +78,24 @@ public class HomeController {
             photo.setPhotoname(filename);
             photo.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","saturation:0"));
             photoRepository.save(photo);
-
+            Photo photo1=new Photo();
+            photo1.setPhotoname(filename+"sepia");
             model.addAttribute("sepiaimageurl", cloudc.createUrl(filename,300,400, "scale", "sepia"));
-
-
+            String photosrc=cloudc.createUrl(filename,300,400, "scale", "sepia");
+            photo1.setPhotosrc(photosrc);
+            photoRepository.save(photo1);
+            Photo photo2=new Photo();
+            photo2.setPhotoname(filename+"pixelate");
             model.addAttribute("pixelateimageurl", cloudc.createUrl(filename,300,400, "scale", "pixelate"));
-
+            photosrc=cloudc.createUrl(filename,300,400, "scale", "pixelate");
+            photo2.setPhotosrc(photosrc);
+            photoRepository.save(photo2);
+            Photo photo3 = new Photo();
+            photo3.setPhotoname(filename+"red");
             model.addAttribute("redimageurl", cloudc.createUrl(filename,300,400, "scale", "red:50"));
-
+            photosrc= cloudc.createUrl(filename,300,400, "scale", "red:50");
+            photo3.setPhotosrc(photosrc);
+            photoRepository.save(photo3);
             model.addAttribute("photoList", photoRepository.findAll());
         } catch (IOException e){
             e.printStackTrace();
@@ -131,13 +141,13 @@ public class HomeController {
         this.userValidator = userValidator;
     }
 
-    @GetMapping("/likes")
+    @GetMapping("/makepost")
     public String memeMaker(Model model) {
         model.addAttribute("meme", new Meme());
         model.addAttribute("photos", photoRepository.findAll());
         return "meme_maker";
     }
-    @RequestMapping("/makememe/{id}")
+    @RequestMapping("/makepost/{id}")
     public String memeform(@PathVariable("id") int id, Model model)
     {
         Photo img=photoRepository.findOne(id);
