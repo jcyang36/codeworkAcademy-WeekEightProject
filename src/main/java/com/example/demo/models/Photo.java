@@ -10,18 +10,22 @@ import javax.persistence.Id;
  */
 @Entity
 public class Photo {
+
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
+    private int id_Photo;
     private String photosrc;
     private String caption;
     private String photoname;
-    public int getId() {
-        return id;
+
+
+    public int getId_Photo() {
+        return id_Photo;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_Photo(int id_Photo) {
+        this.id_Photo = id_Photo;
     }
 
     public String getPhotosrc() {
