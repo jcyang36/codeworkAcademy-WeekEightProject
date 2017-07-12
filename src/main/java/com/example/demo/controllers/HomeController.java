@@ -78,21 +78,14 @@ public class HomeController {
             photo.setPhotoname(filename);
             photo.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","saturation:0"));
             photoRepository.save(photo);
-            Photo photo0=new Photo();
+
             model.addAttribute("sepiaimageurl", cloudc.createUrl(filename,300,400, "scale", "sepia"));
-            photo0.setPhotoname(filename+"sepia");
-            photo0.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","sepia"));
-            photoRepository.save(photo0);
-            Photo photo1=new Photo();
+
+
             model.addAttribute("pixelateimageurl", cloudc.createUrl(filename,300,400, "scale", "pixelate"));
-            photo1.setPhotoname(filename+"pixelate");
-            photo1.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","pixelate"));
-            photoRepository.save(photo1);
-            Photo photo2=new Photo();
-            model.addAttribute("redimageurl", cloudc.createUrl(filename,300,400, "scale", "red"));
-            photo2.setPhotoname(filename+"red");
-            photo2.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","red"));
-            photoRepository.save(photo2);
+
+            model.addAttribute("redimageurl", cloudc.createUrl(filename,300,400, "scale", "red:50"));
+
             model.addAttribute("photoList", photoRepository.findAll());
         } catch (IOException e){
             e.printStackTrace();
