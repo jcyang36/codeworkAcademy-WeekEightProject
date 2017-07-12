@@ -1,9 +1,7 @@
 package com.example.demo.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by student on 7/10/17.
@@ -19,6 +17,10 @@ public class Photo {
     private String photosrc;
     private String caption;
     private String photoname;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable (joinColumns = @JoinColumn(name = "photo_id"),inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> users;
 
     public int getId() {
         return id;

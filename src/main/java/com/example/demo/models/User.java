@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "userData")
@@ -37,6 +38,10 @@ public class User {
 
     @Column(name = "username")
     private String username;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable (joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "photo_id"))
+    private Set<Photo> photos;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))

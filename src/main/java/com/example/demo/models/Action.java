@@ -18,16 +18,16 @@ public class Action {
 
 
 
-    @OneToMany(cascade=CascadeType.ALL)
+ /*   @OneToMany(cascade=CascadeType.ALL)
     @JoinTable
     private Set<User> users;
 
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinTable
-    private Set<Photo> photos;
+    private Set<Photo> photos;*/
 
-    public Set<User> getUsers() {
+   /* public Set<User> getUsers() {
         return users;
     }
 
@@ -42,7 +42,7 @@ public class Action {
     public void setPhotos(Set<Photo> photos) {
         this.photos = photos;
     }
-
+*/
     public long getId() {
         return id;
     }
