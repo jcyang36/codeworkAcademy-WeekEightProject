@@ -180,6 +180,12 @@ public class HomeController {
         return "memez";
     }
 
+    @RequestMapping("/myfriends")
+    public String showMyFriends(Model model){
+        model.addAttribute("friendList", userRepository.findAll());
+        return "myfriends";
+    }
+
     @Autowired
     public EmailService emailService;
     public void sendEmailWithoutTemplating(User user, Meme meme){
@@ -197,4 +203,6 @@ public class HomeController {
         }
 
     }
+
+
 }

@@ -17,11 +17,11 @@
 
     <div class="row">
 
-        <th:block th:each="photo: ${photos}">
+        <th:block th:each="friend: ${friendList}">
 
-            <div class="col-sm-3">
+            <div class="col-md-3">
 
-                <a th:href="@{'/makememe/' + ${photo.id} }" th:utext="${photo.photorc}"></a>
+                <a th:utext="${friend.username}"></a>
 
             </div>
 
