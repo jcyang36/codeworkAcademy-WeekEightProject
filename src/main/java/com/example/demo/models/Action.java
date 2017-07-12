@@ -13,10 +13,12 @@ public class Action {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
-    private long id_Photo;
-    private long id_Usr;
+    private long idPhoto;
+    private long idUsr;
     private String typeAction;
     private String content;
+
+
 
 
     public long getId() {
@@ -27,21 +29,27 @@ public class Action {
         this.id = id;
     }
 
-    public long getId_Photo() {
-        return id_Photo;
+    public long getIdPhoto() {
+        return idPhoto;
     }
 
-    public void setId_Photo(long id_Photo) {
-        this.id_Photo = id_Photo;
+    public void setIdPhoto(long idPhoto) {
+        this.idPhoto = idPhoto;
     }
 
-    public long getId_Usr() {
-        return id_Usr;
+    public long getIdUsr() {
+        return idUsr;
     }
 
-    public void setId_Usr(long id_Usr) {
-        this.id_Usr = id_Usr;
+    public void setIdUsr(long idUsr) {
+        this.idUsr = idUsr;
     }
+
+
+
+
+
+
 
     public String getTypeAction() {
         return typeAction;

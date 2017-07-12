@@ -12,21 +12,22 @@ import javax.persistence.Id;
 public class Photo {
 
 
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id_Photo;
+    private int id;
     private String photosrc;
     private String caption;
     private String photoname;
 
-
-    public int getId_Photo() {
-        return id_Photo;
+    public int getId() {
+        return id;
     }
 
-    public void setId_Photo(int id_Photo) {
-        this.id_Photo = id_Photo;
+    public void setId(int id) {
+        this.id = id;
     }
+
 
     public String getPhotosrc() {
         return photosrc;
