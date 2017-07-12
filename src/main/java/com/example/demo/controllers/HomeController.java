@@ -75,10 +75,14 @@ public class HomeController {
                     "You successfully uploaded '" + file.getOriginalFilename() + "'");
             model.addAttribute("imageurl", uploadResult.get("url"));
             String filename = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
-            model.addAttribute("sizedimageurl", cloudc.createUrl(filename,300,400, "scale","sepia"));
+            model.addAttribute("sizedimageurl", cloudc.createUrl(filename,300,400, "scale", "saturation:0"));
             photo.setPhotoname(filename);
-            photo.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","sepia"));
+            photo.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","saturation:0"));
             photoRepository.save(photo);
+            Photo photo0=new Photo();
+            photo0.setPhotoname(filename+"sepia");
+            photo0.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","sepia"));
+            photoRepository.save(photo0);
             Photo photo1=new Photo();
             photo1.setPhotoname(filename+"pixelate");
             photo1.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","pixelate"));
