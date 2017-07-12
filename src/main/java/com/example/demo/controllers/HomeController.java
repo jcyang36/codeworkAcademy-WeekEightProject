@@ -64,9 +64,10 @@ public class HomeController {
         return "home";
     }
     @PostMapping("/comment")
-    public String addComment( @RequestParam("content") String content, @ModelAttribute Action action){
+    public String addComment( @RequestParam("content") String content, @ModelAttribute Action action, Model model){
         action.setContent(content);
-        return "home";
+        model.addAttribute("content", content);
+        return "myfriends";
     }
     @GetMapping("/upload")
     public String uploadForm(Model model){

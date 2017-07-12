@@ -51,7 +51,11 @@
         </div>
         </th:block>
     </div>
-
+    <form th:object="${action}" method="POST" action="/comment" enctype="multipart/form-data">
+        <label for="content">Comment</label>
+        <input type="text" name="content" id="content" th:field="*{content}"/><br/>
+        <input type="submit" value="Submit"/>
+    </form>
 </div>
 
 
