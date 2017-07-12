@@ -145,7 +145,7 @@ public class HomeController {
     public String memeMaker(Model model) {
         model.addAttribute("meme", new Meme());
         model.addAttribute("photoList", photoRepository.findAll());
-        return "meme_maker";
+        return "mypost";
     }
     @RequestMapping("/makepost/{id}")
     public String memeform(@PathVariable("id") int id, Model model)
@@ -156,7 +156,7 @@ public class HomeController {
         model.addAttribute("meme", meme);
 
 
-        return "meme_maker_maker";
+        return "postconfirm";
     }
 
 
@@ -165,7 +165,7 @@ public class HomeController {
         model.addAttribute("meme", meme);
         userValidator.validateCaptions(meme, result);
         if (result.hasErrors()) {
-            return "meme_maker_maker";
+            return "postconfirm";
         }
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user=userRepository.findByUsername(username);
@@ -174,10 +174,10 @@ public class HomeController {
         memeRepository.save(meme);
         meme=memeRepository.findTop1ByUserIdOrderByIdDesc((int) user.getId()).get(0);
         sendEmailWithoutTemplating(user,meme);
-        return "redirect:/memes";
+        return "redirect:/posts";
     }
 
-    @RequestMapping("/memes")
+    @RequestMapping("/posts")
     public String viewMemes(Model model) {
         //Find all by username
         /*String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -186,9 +186,9 @@ public class HomeController {
         */
         //Find all
         model.addAttribute("memeList", memeRepository.findAll());
-        return "viewmemes";
+        return "viewposts";
     }
-    @RequestMapping("/showmemes/{id}")
+    @RequestMapping("/showposts/{id}")
     public String showMeme(@PathVariable("id") long id, Model model)
     {
         Meme meme=memeRepository.findOne(id);

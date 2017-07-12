@@ -30,7 +30,7 @@
                     <a class="navbar-brand" href="/"><h3>INSTAPOP</h3></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav">
+                    <ul class="nav nav-justified">
 
                         <th:block sec:authorize="isAnonymous()">
                             <li><a href="/login"><h3>Login</h3></a></li>
@@ -40,7 +40,7 @@
                         <th:block sec:authorize="isAuthenticated()">
                             <li><a href="/logout"><h3>Logout</h3></a></li>
                             <th:block sec:authorize="hasAuthority('ADMIN')">
-                                <li><a href="/upload"><h3>Likes</h3></a></li>
+                                <li><a href="/upload"><h3>Add +</h3></a></li>
                                 <li><a href="/makepost"><h3>Make post</h3></a></li>
                             </th:block>
 
