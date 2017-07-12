@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.cloudinary.utils.ObjectUtils;
 import com.example.demo.configs.CloudinaryConfig;
+import com.example.demo.models.Action;
 import com.example.demo.models.Photo;
 import com.example.demo.models.Meme;
 import com.example.demo.models.User;
@@ -57,7 +58,16 @@ public class HomeController {
 
         return "home";
     }
-
+    @GetMapping("/comment")
+    public String goComment(Model model){
+        model.addAttribute("action", new Action());
+        return "home";
+    }
+    @PostMapping("/comment")
+    public String addComment( @RequestParam("content") String content, @ModelAttribute Action action){
+        action.setContent(content);
+        return "home";
+    }
     @GetMapping("/upload")
     public String uploadForm(Model model){
         model.addAttribute("photo", new Photo());

@@ -10,7 +10,8 @@
     <h3>Upload</h3>
     <form th:object="${photo}" method="POST" action="/upload" enctype="multipart/form-data">
         <input type="file" name="file"/><br/><br/>
-        <input type="text" name="caption" th:field="*{caption}"/><br/>
+        <label for="caption">Caption</label>
+        <input type="text" name="caption" id="caption" th:field="*{caption}"/><br/>
         <input type="submit" value="Submit"/>
     </form>
     <div th:if="${message}">

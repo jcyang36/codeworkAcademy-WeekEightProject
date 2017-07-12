@@ -27,19 +27,20 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"><h1>INSTAPOP</h1></a>
+                    <a class="navbar-brand" href="/"><h3>INSTAPOP</h3></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav nav-justified>
+                    <ul class="nav">
+
                         <th:block sec:authorize="isAnonymous()">
-                            <li><a href="/login"><h1>Login</h1></a></li>
-                            <li><a href="/register"><h1>Register</h1></a></li>
+                            <li><a href="/login"><h3>Login</h3></a></li>
+                            <li><a href="/register"><h3>Register</h3></a></li>
                         </th:block>
 
                         <th:block sec:authorize="isAuthenticated()">
-                            <li><a href="/logout"><h1>Logout</h1></a></li>
+                            <li><a href="/logout"><h3>Logout</h3></a></li>
                             <th:block sec:authorize="hasAuthority('ADMIN')">
-                                <li><a href="/upload"><h1>Likes</h1></a></li>
+                                <li><a href="/upload"><h3>Likes</h3></a></li>
                             </th:block>
 
 
