@@ -26,15 +26,28 @@
 
     <div class="row">
         <h2>Filters</h2>
-        <th:block th:each="photo: ${photoList}">
+
             <div class="col-md-3">
 
-                <div th:utext="${photo.photosrc}">
+                <div th:utext="${sepiaimageurl}">
 
                 </div>
 
-                <p th:text="${photo.caption}">Caption</p>
             </div>
+        <div class="col-md-3">
+
+            <div th:utext="${pixelateimageurl}">
+
+            </div>
+
+        </div>
+        <div class="col-md-3">
+
+            <div th:utext="${redimageurl}">
+
+            </div>
+
+        </div>
         </th:block>
     </div>
 

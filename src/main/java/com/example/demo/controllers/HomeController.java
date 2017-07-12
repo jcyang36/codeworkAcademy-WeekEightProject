@@ -71,8 +71,7 @@ public class HomeController {
         }
         try {
             Map uploadResult =  cloudc.upload(file.getBytes(), ObjectUtils.asMap("resourcetype", "auto"));
-            model.addAttribute("message",
-                    "You successfully uploaded '" + file.getOriginalFilename() + "'");
+
             model.addAttribute("imageurl", uploadResult.get("url"));
             String filename = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
             model.addAttribute("sizedimageurl", cloudc.createUrl(filename,300,400, "scale", "saturation:0"));
@@ -80,14 +79,17 @@ public class HomeController {
             photo.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","saturation:0"));
             photoRepository.save(photo);
             Photo photo0=new Photo();
+            model.addAttribute("sepiaimageurl", cloudc.createUrl(filename,300,400, "scale", "sepia"));
             photo0.setPhotoname(filename+"sepia");
             photo0.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","sepia"));
             photoRepository.save(photo0);
             Photo photo1=new Photo();
+            model.addAttribute("pixelateimageurl", cloudc.createUrl(filename,300,400, "scale", "pixelate"));
             photo1.setPhotoname(filename+"pixelate");
             photo1.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","pixelate"));
             photoRepository.save(photo1);
             Photo photo2=new Photo();
+            model.addAttribute("redimageurl", cloudc.createUrl(filename,300,400, "scale", "red"));
             photo2.setPhotoname(filename+"red");
             photo2.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","red"));
             photoRepository.save(photo2);
@@ -136,7 +138,7 @@ public class HomeController {
         this.userValidator = userValidator;
     }
 
-    @GetMapping("/meme_maker")
+    @GetMapping("/likes")
     public String memeMaker(Model model) {
         model.addAttribute("meme", new Meme());
         model.addAttribute("photos", photoRepository.findAll());
