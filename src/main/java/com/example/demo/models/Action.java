@@ -1,9 +1,7 @@
 package com.example.demo.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by student on 7/12/17.
@@ -20,6 +18,30 @@ public class Action {
 
 
 
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinTable
+    private Set<User> users;
+
+
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinTable
+    private Set<Photo> photos;
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public Set<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(Set<Photo> photos) {
+        this.photos = photos;
+    }
 
     public long getId() {
         return id;
