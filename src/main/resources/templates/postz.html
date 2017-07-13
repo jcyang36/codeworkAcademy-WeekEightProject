@@ -8,6 +8,7 @@
     <title>My posts</title>
 
     <th:block th:replace="base :: head"></th:block>
+    <script src="bootstrap-checkbox.min.js" defer></script>
     <style>
 
         #container {
@@ -54,14 +55,9 @@
 
 
         <th:block th:utext="${post.imageUrl}"></th:block>
-
-    <div class = "checkbox checkbox-primary">
-        <input id = "check3" class = "styled" type = "checkbox" checked />
-        <label for = "check3">
-            Like
-        </label>
-
-    </div>
-
+        <form>
+        <input id="check1" type="checkbox"/>
+        <label for="check1">Like</label>
+        </form>
 </body>
 </html>
