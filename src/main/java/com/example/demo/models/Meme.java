@@ -14,8 +14,7 @@ public class Meme {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String top;
-    private String bottom;
+
     private String imageUrl;
     private int userId;
 
@@ -27,21 +26,6 @@ public class Meme {
         this.id = id;
     }
 
-    public String getTop() {
-        return top;
-    }
-
-    public void setTop(String top) {
-        this.top = top;
-    }
-
-    public String getBottom() {
-        return bottom;
-    }
-
-    public void setBottom(String bottom) {
-        this.bottom = bottom;
-    }
 
     public String getImageUrl() {
         return imageUrl;
