@@ -4,34 +4,29 @@
     <meta charset="UTF-8" />
     <th:block th:fragment="head">
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="bootstrap3/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="assets/css/gsdk.css" rel="stylesheet"/>
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <link href="assets/css/demo.css" rel="stylesheet" />
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href='https://fonts.googleapis.com/css?family=Grand+Hotel|Open+Sans:400,300' rel='stylesheet' type='text/css'/>
+        <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </th:block>
 
-        <title>Meme Maker</title>
+        <title>Base</title>
 </head>
 <body>
 <div class="navbar-wrapper">
     <div class="container">
         <nav class="navbar navbar-nav navbar-static-top" th:fragment="navbar">
             <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/"><h3>INSTAPOP</h3></a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav nav-justified">
 
+                <div class="masthead">
+                    <ul class="nav nav-justified">
+                            <li><a href="/"> <h3>INSTAPOP</h3></a></li>
                         <th:block sec:authorize="isAnonymous()">
                             <li><a href="/login"><h3>Login</h3></a></li>
                             <li><a href="/register"><h3>Register</h3></a></li>
@@ -57,10 +52,6 @@
 
 <div class="container">
 
-    <div class="starter-template">
-        <h1>Meme Maker</h1>
-        <p class="lead"><br /> </p>
-    </div>
 
 </div><!-- /.container -->
 <th:block th:fragment="footlinks">
