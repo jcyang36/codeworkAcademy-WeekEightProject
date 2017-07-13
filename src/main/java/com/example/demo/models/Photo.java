@@ -19,17 +19,7 @@ public class Photo {
     private String photoname;
 
 
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable (joinColumns = @JoinColumn(name = "photo_id"),inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users;
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
     public int getId() {
         return id;
     }

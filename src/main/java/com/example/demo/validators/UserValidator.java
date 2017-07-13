@@ -3,7 +3,6 @@ package com.example.demo.validators;
 /**
  * Created by student on 7/5/17.
  */
-import com.example.demo.models.Meme;
 import com.example.demo.models.User;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

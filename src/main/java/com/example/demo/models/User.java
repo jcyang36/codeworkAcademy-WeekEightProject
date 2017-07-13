@@ -40,10 +40,17 @@ public class User {
     private String username;
 
 
+    public Collection<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Collection<Post> posts) {
+        this.posts = posts;
+    }
 
     @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable (joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "photo_id"))
-    private Set<Photo> photos;
+    @JoinTable (joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private Collection<Post> posts;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -60,14 +67,7 @@ public class User {
     public User() {
     }
 
-    //  Getters and Setters
-    public Set<Photo> getPhotos() {
-        return photos;
-    }
 
-    public void setPhotos(Set<Photo> photos) {
-        this.photos = photos;
-    }
     public long getId() {
         return id;
     }

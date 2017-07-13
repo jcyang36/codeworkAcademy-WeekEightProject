@@ -14,9 +14,9 @@
 
     <div class="container">
 
-        <form th:object="${meme}" method="POST" action="/new_meme">
-                      <input type="hidden" th:value="${meme.imageUrl}"  name="imageUrl"/>
-            <th:block th:utext="${meme.imageUrl}"></th:block>
+        <form th:object="${post}" method="POST" action="/new_post">
+                      <input type="hidden" th:value="${post.imageUrl}"  name="imageUrl"/>
+            <th:block th:utext="${post.imageUrl}"></th:block>
             <input type="submit" value="Make the post"/>
         </form>
 

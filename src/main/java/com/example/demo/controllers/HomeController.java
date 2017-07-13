@@ -3,17 +3,14 @@ package com.example.demo.controllers;
 import com.cloudinary.utils.ObjectUtils;
 import com.example.demo.configs.CloudinaryConfig;
 import com.example.demo.models.Photo;
-import com.example.demo.models.Meme;
+import com.example.demo.models.Post;
 import com.example.demo.models.User;
-import com.example.demo.repositories.MemeRepository;
+
 import com.example.demo.repositories.PhotoRepository;
+import com.example.demo.repositories.PostRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
 import com.example.demo.validators.UserValidator;
-import com.google.common.collect.Lists;
-import it.ozimov.springboot.mail.model.Email;
-import it.ozimov.springboot.mail.model.defaultimpl.DefaultEmail;
-import it.ozimov.springboot.mail.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,10 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
@@ -46,11 +41,53 @@ public class HomeController {
     @Autowired
     PhotoRepository photoRepository;
     @Autowired
-    MemeRepository memeRepository;
+    PostRepository postRepository;
 
 
     @Autowired
     CloudinaryConfig cloudc;
+
+    /*    FIRST STEPS        */
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
+
+    }
+
+    @RequestMapping(value="/register", method = RequestMethod.GET)
+    public String showRegistrationPage(Model model){
+        model.addAttribute("user", new User());
+        return "registration";
+    }
+    @RequestMapping(value="/register", method = RequestMethod.POST)
+    public String processRegistrationPage(@Valid @ModelAttribute("user") User user, BindingResult result, Model model){
+        model.addAttribute("user", user);
+        userValidator.validate(user, result);
+        if (result.hasErrors()) {
+            return "registration";
+        }
+        if(user.getRoleName().equals("user"))
+        {
+            userService.saveUser(user);
+            model.addAttribute("message", "User Account Successfully Created");
+        }
+        if(user.getRoleName().equals("admin"))
+        {
+            userService.saveAdmin(user);
+            model.addAttribute("message", "Admin Account Successfully Created");
+        }
+        return "home";
+    }
+    public UserValidator getUserValidator() {
+        return userValidator;
+    }
+    public void setUserValidator(UserValidator userValidator) {
+        this.userValidator = userValidator;
+    }
+
+
+    /*    FIRST STEPS        */
+
 
     @RequestMapping("/")
     public String home(Model model){
@@ -104,122 +141,85 @@ public class HomeController {
         return "upload";
     }
 
-    @RequestMapping("/login")
-    public String login(){
-        return "login";
-
-    }
-
-    @RequestMapping(value="/register", method = RequestMethod.GET)
-    public String showRegistrationPage(Model model){
-        model.addAttribute("user", new User());
-        return "registration";
-    }
-    @RequestMapping(value="/register", method = RequestMethod.POST)
-    public String processRegistrationPage(@Valid @ModelAttribute("user") User user, BindingResult result, Model model){
-        model.addAttribute("user", user);
-        userValidator.validate(user, result);
-        if (result.hasErrors()) {
-            return "registration";
-        }
-        if(user.getRoleName().equals("user"))
-        {
-            userService.saveUser(user);
-            model.addAttribute("message", "User Account Successfully Created");
-        }
-        if(user.getRoleName().equals("admin"))
-        {
-            userService.saveAdmin(user);
-            model.addAttribute("message", "Admin Account Successfully Created");
-        }
-        return "home";
-    }
-    public UserValidator getUserValidator() {
-        return userValidator;
-    }
-    public void setUserValidator(UserValidator userValidator) {
-        this.userValidator = userValidator;
-    }
 
     @GetMapping("/makepost")
-    public String memeMaker(Model model) {
-        model.addAttribute("meme", new Meme());
+    public String postMaker(Model model) {
+        model.addAttribute("post", new Post());
         model.addAttribute("photos", photoRepository.findAll());
         return "mypost";
     }
     @RequestMapping("/makepost/{id}")
-    public String memeform(@PathVariable("id") int id, Model model)
+    public String postform(@PathVariable("id") int id, Model model)
     {
         Photo img=photoRepository.findOne(id);
-        Meme meme=new Meme();
-        meme.setImageUrl(img.getPhotosrc());
-        model.addAttribute("meme", meme);
+        Post post=new Post();
+        post.setImageUrl(img.getPhotosrc());
+        model.addAttribute("post", post);
 
 
         return "postconfirm";
     }
 
 
-    @PostMapping("/new_meme")
-    public String addMeme(@Valid @ModelAttribute("meme")Meme meme, BindingResult result, Model model) {
-        model.addAttribute("meme", meme);
+    @PostMapping("/new_post")
+    public String addpost(@Valid @ModelAttribute("post")Post post, BindingResult result, Model model) {
+        model.addAttribute("post", post);
         if (result.hasErrors()) {
             return "postconfirm";
         }
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user=userRepository.findByUsername(username);
         Long id = user.getId();
-        meme.setUserId(id.intValue());
-        memeRepository.save(meme);
-        meme=memeRepository.findTop1ByUserIdOrderByIdDesc((int) user.getId()).get(0);
-        sendEmailWithoutTemplating(user,meme);
-        return "redirect:/viewposts";
+        post.setUserId(id.intValue());
+        postRepository.save(post);
+        post=postRepository.findTop1ByUserIdOrderByIdDesc((int) user.getId()).get(0);
+
+        return "redirect:/posts";
 
     }
 
-    @RequestMapping("/viewposts")
-    public String viewMemes(Model model) {
+    @RequestMapping("/posts")
+    public String viewposts(Model model) {
         //Find all by username
         /*String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer id =  userRepository.findByUsername(username).getId();
-        model.addAttribute("memeList", memeRepository.findAllByUserId(id.intValue()));
+        model.addAttribute("postList", postRepository.findAllByUserId(id.intValue()));
         */
         //Find all
-        model.addAttribute("memeList", memeRepository.findAll());
+        model.addAttribute("postList", postRepository.findAll());
         return "viewposts";
     }
-    @RequestMapping("/showposts/{id}")
-    public String showMeme(@PathVariable("id") long id, Model model)
-    {
-        Meme meme=memeRepository.findOne(id);
-        model.addAttribute("meme",meme);
 
-        return "memez";
+    @RequestMapping("/like/{id}")
+    public String likepost(@PathVariable("id") int id, Model model)
+    {
+        Post post=postRepository.findOne(id);
+        model.addAttribute("post",post);
+        int likecount=1;
+        model.addAttribute("userlike", likecount);
+        return "postz";
+    }
+    @RequestMapping("/showposts/{id}")
+    public String showpost(@PathVariable("id") int id, Model model)
+    {
+        Post post=postRepository.findOne(id);
+        model.addAttribute("post",post);
+
+        return "postz";
     }
 
     @RequestMapping("/myfriends")
     public String showMyFriends(Model model){
         model.addAttribute("friendList", userRepository.findAll());
+        int likecount=1;
+        model.addAttribute("userlike", likecount);
+
+
         return "myfriends";
     }
 
-    @Autowired
-    public EmailService emailService;
-    public void sendEmailWithoutTemplating(User user, Meme meme){
-        final Email email;
-        try {
-            email = DefaultEmail.builder()
-                    .from(new InternetAddress("bot.orion.bot@gmail.com", "The MemeLord"))
-                    .to(Lists.newArrayList(new InternetAddress(user.getEmail(),user.getUsername())))
-                    .subject("Your Meme, Your Way")
-                    .body("You have created a new meme. Here is the link: codeworkacademy-weekeightproj.herokuapp.com/showposts/"+meme.getId())
-                    .encoding("UTF-8").build();
-            emailService.send(email);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
 
-    }
+
 
 
 }
