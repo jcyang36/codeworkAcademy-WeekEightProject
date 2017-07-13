@@ -18,9 +18,9 @@
         <title>Meme Maker</title>
 </head>
 <body>
-<div class="navbar-wrapper">
+<div class="navbar-wrapper" th:fragment="navbar">
     <div class="container">
-        <nav class="navbar navbar-nav navbar-static-top" th:fragment="navbar">
+        <nav class="navbar navbr-ct-blue navbar-static-top" >
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -43,7 +43,7 @@
                             <li><a href="/logout"><h3>Logout</h3></a></li>
                             <th:block sec:authorize="hasAuthority('ADMIN')">
                                 <li><a href="/upload"><h3>Add +</h3></a></li>
-                                <li><a href="/makepost"><h3>Make post</h3></a></li>
+                               
                             </th:block>
 
 
