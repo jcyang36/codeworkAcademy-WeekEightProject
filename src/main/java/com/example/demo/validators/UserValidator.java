@@ -40,18 +40,6 @@ public class UserValidator implements Validator {
             errors.rejectValue("username", "user.username.duplicate");
         }
     }
-    public void validateCaptions(Object target, Errors errors)
-    {
-        Meme meme= (Meme) target;
-        String top=meme.getTop();
-        String bottom=meme.getBottom();
-        if(top.length() > 50){
-            errors.rejectValue("top","meme.top.tooLong");
-        }
-        if(bottom.length() > 50){
-            errors.rejectValue("bottom","meme.bottom.tooLong");
-        }
 
-    }
 
 }

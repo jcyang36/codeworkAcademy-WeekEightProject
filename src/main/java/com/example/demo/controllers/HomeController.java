@@ -141,10 +141,10 @@ public class HomeController {
         this.userValidator = userValidator;
     }
 
-    @GetMapping("/makepost")
+    @GetMapping("/mypost")
     public String memeMaker(Model model) {
         model.addAttribute("meme", new Meme());
-        model.addAttribute("photoList", photoRepository.findAll());
+        model.addAttribute("photos", photoRepository.findAll());
         return "mypost";
     }
     @RequestMapping("/makepost/{id}")
@@ -163,7 +163,6 @@ public class HomeController {
     @PostMapping("/new_meme")
     public String addMeme(@Valid @ModelAttribute("meme")Meme meme, BindingResult result, Model model) {
         model.addAttribute("meme", meme);
-        userValidator.validateCaptions(meme, result);
         if (result.hasErrors()) {
             return "postconfirm";
         }
@@ -212,7 +211,7 @@ public class HomeController {
                     .from(new InternetAddress("bot.orion.bot@gmail.com", "The MemeLord"))
                     .to(Lists.newArrayList(new InternetAddress(user.getEmail(),user.getUsername())))
                     .subject("Your Meme, Your Way")
-                    .body("You have created a new meme. Here is the link: memez-memez.herokuapp.com/showmemes/"+meme.getId())
+                    .body("You have created a new meme. Here is the link: codeworkacademy-weekeightproj.herokuapp.com/showposts/"+meme.getId())
                     .encoding("UTF-8").build();
             emailService.send(email);
         } catch (UnsupportedEncodingException e) {
