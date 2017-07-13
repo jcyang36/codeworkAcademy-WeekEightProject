@@ -39,6 +39,8 @@ public class User {
     @Column(name = "username")
     private String username;
 
+
+
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable (joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "photo_id"))
     private Set<Photo> photos;
@@ -59,7 +61,13 @@ public class User {
     }
 
     //  Getters and Setters
+    public Set<Photo> getPhotos() {
+        return photos;
+    }
 
+    public void setPhotos(Set<Photo> photos) {
+        this.photos = photos;
+    }
     public long getId() {
         return id;
     }

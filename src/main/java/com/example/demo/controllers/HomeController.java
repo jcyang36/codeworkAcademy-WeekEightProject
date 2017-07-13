@@ -173,11 +173,11 @@ public class HomeController {
         memeRepository.save(meme);
         meme=memeRepository.findTop1ByUserIdOrderByIdDesc((int) user.getId()).get(0);
         sendEmailWithoutTemplating(user,meme);
-        return "redirect:/posts";
-       
+        return "redirect:/viewposts";
+
     }
 
-    @RequestMapping("/posts")
+    @RequestMapping("/viewposts")
     public String viewMemes(Model model) {
         //Find all by username
         /*String username = SecurityContextHolder.getContext().getAuthentication().getName();
