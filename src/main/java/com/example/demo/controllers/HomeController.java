@@ -141,7 +141,7 @@ public class HomeController {
         this.userValidator = userValidator;
     }
 
-    @GetMapping("/makepost")
+    @GetMapping("/mypost")
     public String memeMaker(Model model) {
         model.addAttribute("meme", new Meme());
         model.addAttribute("photos", photoRepository.findAll());
@@ -163,7 +163,6 @@ public class HomeController {
     @PostMapping("/new_meme")
     public String addMeme(@Valid @ModelAttribute("meme")Meme meme, BindingResult result, Model model) {
         model.addAttribute("meme", meme);
-        userValidator.validateCaptions(meme, result);
         if (result.hasErrors()) {
             return "postconfirm";
         }
