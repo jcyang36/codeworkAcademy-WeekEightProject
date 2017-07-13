@@ -141,7 +141,7 @@ public class HomeController {
         this.userValidator = userValidator;
     }
 
-    @GetMapping("/mypost")
+    @GetMapping("/makepost")
     public String memeMaker(Model model) {
         model.addAttribute("meme", new Meme());
         model.addAttribute("photos", photoRepository.findAll());
@@ -174,6 +174,7 @@ public class HomeController {
         meme=memeRepository.findTop1ByUserIdOrderByIdDesc((int) user.getId()).get(0);
         sendEmailWithoutTemplating(user,meme);
         return "redirect:/posts";
+       
     }
 
     @RequestMapping("/posts")
