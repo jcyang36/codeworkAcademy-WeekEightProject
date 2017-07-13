@@ -111,29 +111,28 @@ public class HomeController {
 
             model.addAttribute("imageurl", uploadResult.get("url"));
             String filename = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
-            model.addAttribute("sizedimageurl", cloudc.createUrl(filename,300,400, "scale", "saturation:0"));
+            model.addAttribute("sizedimageurl", cloudc.createUrl(filename,300,400, "fill", "saturation:0"));
             photo.setPhotoname(filename);
-            photo.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "scale","saturation:0"));
+            photo.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "fill","saturation:0"));
             photoRepository.save(photo);
             Photo photo1=new Photo();
             photo1.setPhotoname(filename+"sepia");
-            model.addAttribute("sepiaimageurl", cloudc.createUrl(filename,300,400, "scale", "sepia"));
-            String photosrc=cloudc.createUrl(filename,300,400, "scale", "sepia");
+            model.addAttribute("sepiaimageurl", cloudc.createUrl(filename,300,400, "fill", "sepia"));
+            String photosrc=cloudc.createUrl(filename,300,400, "fill", "sepia");
             photo1.setPhotosrc(photosrc);
             photoRepository.save(photo1);
             Photo photo2=new Photo();
             photo2.setPhotoname(filename+"pixelate");
-            model.addAttribute("pixelateimageurl", cloudc.createUrl(filename,300,400, "scale", "pixelate"));
-            photosrc=cloudc.createUrl(filename,300,400, "scale", "pixelate");
+            model.addAttribute("pixelateimageurl", cloudc.createUrl(filename,300,400, "fill", "pixelate"));
+            photosrc=cloudc.createUrl(filename,300,400, "fill", "pixelate");
             photo2.setPhotosrc(photosrc);
             photoRepository.save(photo2);
             Photo photo3 = new Photo();
             photo3.setPhotoname(filename+"red");
-            model.addAttribute("redimageurl", cloudc.createUrl(filename,300,400, "scale", "red:50"));
-            photosrc= cloudc.createUrl(filename,300,400, "scale", "red:50");
+            model.addAttribute("redimageurl", cloudc.createUrl(filename,300,400, "fill", "red:50"));
+            photosrc= cloudc.createUrl(filename,300,400, "fill", "red:50");
             photo3.setPhotosrc(photosrc);
             photoRepository.save(photo3);
-            model.addAttribute("photoList", photoRepository.findAll());
         } catch (IOException e){
             e.printStackTrace();
             model.addAttribute("message", "Sorry I can't upload that!");
@@ -142,10 +141,12 @@ public class HomeController {
     }
 
 
+
     @GetMapping("/makepost")
     public String postMaker(Model model) {
         model.addAttribute("post", new Post());
-        model.addAttribute("photos", photoRepository.findAll());
+        /*model.addAttribute("photos", photoRepository.findAll());*/
+
         return "mypost";
     }
     @RequestMapping("/makepost/{id}")
@@ -160,6 +161,18 @@ public class HomeController {
         return "postconfirm";
     }
 
+
+    @RequestMapping("/posts")
+    public String viewposts(Model model) {
+        //Find all by username
+        /*String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Integer id =  userRepository.findByUsername(username).getId();
+        model.addAttribute("postList", postRepository.findAllByUserId(id.intValue()));
+        */
+        //Find all
+        model.addAttribute("postList", postRepository.findAll());
+        return "viewposts";
+    }
 
     @PostMapping("/new_post")
     public String addpost(@Valid @ModelAttribute("post")Post post, BindingResult result, Model model) {
@@ -178,17 +191,6 @@ public class HomeController {
 
     }
 
-    @RequestMapping("/posts")
-    public String viewposts(Model model) {
-        //Find all by username
-        /*String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Integer id =  userRepository.findByUsername(username).getId();
-        model.addAttribute("postList", postRepository.findAllByUserId(id.intValue()));
-        */
-        //Find all
-        model.addAttribute("postList", postRepository.findAll());
-        return "viewposts";
-    }
 
     @RequestMapping("/like/{id}")
     public String likepost(@PathVariable("id") int id, Model model)
@@ -207,6 +209,13 @@ public class HomeController {
 
         return "postz";
     }
+
+
+
+     /* @RequestMapping("/showposts/sepia")
+    public String showsepia(@RequestParam("sepia")){
+    }*/
+
 
     @RequestMapping("/myfriends")
     public String showMyFriends(Model model){

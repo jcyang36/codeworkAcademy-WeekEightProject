@@ -2,6 +2,13 @@
 <html lang="en" xmlns:th="www.thymeleaf.org " xmlns:sec="www.thymeleaf.org/extras/spring-security">
 <head>
     <th:block th:replace="base :: head"></th:block>
+    <style>
+        #photo {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
 </head>
 <body>
 <br/><br/>
@@ -19,7 +26,10 @@
     </div>
 
 <div class="row">
-    <div th:utext="${sizedimageurl}">
+    <a th:href="@{'/makepost/1'}">
+        <div class ="photo"  th:utext="${sepiaimageurl}">
+        </div>
+    </a>
 
     </div>
 </div>
@@ -30,23 +40,27 @@
 
             <div class="col-md-3">
 
-                <div th:utext="${sepiaimageurl}">
+                    <a th:href="@{'/makepost/2'}">
+                        <div class ="photo"  th:utext="${sepiaimageurl}">
+                        </div>
+                    </a>
 
-                </div>
 
             </div>
         <div class="col-md-3">
 
-            <div th:utext="${pixelateimageurl}">
-
-            </div>
+            <a th:href="@{'/makepost/3'}">
+                <div class ="photo"  th:utext="${pixelateimageurl}">
+                </div>
+            </a>
 
         </div>
         <div class="col-md-3">
 
-            <div th:utext="${redimageurl}">
-
-            </div>
+            <a th:href="@{'/makepost/4'}">
+                <div class ="photo"  th:utext="${redimageurl}">
+                </div>
+            </a>
 
         </div>
         </th:block>
