@@ -144,7 +144,7 @@ public class HomeController {
     @GetMapping("/makepost")
     public String memeMaker(Model model) {
         model.addAttribute("meme", new Meme());
-        model.addAttribute("photoList", photoRepository.findAll());
+        model.addAttribute("photos", photoRepository.findAll());
         return "mypost";
     }
     @RequestMapping("/makepost/{id}")
