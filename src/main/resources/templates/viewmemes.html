@@ -64,7 +64,7 @@
 <div class = "row">
     <th:block th:each = "meme: ${memeList}">
         <div class= "col-md-3">
-            </div>
+
             <div id="container">
                 <a th:href="@{'/showposts/'+${meme.id}}"><div id ="photo"  th:utext="${meme.imageUrl}">
                 </div></a>
