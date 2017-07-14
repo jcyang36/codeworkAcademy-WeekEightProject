@@ -152,6 +152,7 @@ public class HomeController {
     @RequestMapping("/makepost/{id}")
     public String postform(@PathVariable("id") int id, Model model)
     {
+        
         Photo img=photoRepository.findOne(id);
         Post post=new Post();
         post.setImageUrl(img.getPhotosrc());
@@ -224,14 +225,22 @@ public class HomeController {
         return "myfriends";
     }
 
-/*    FOLLOW  */
+/*    Follow another user */
     @RequestMapping("/follow/{id}")
     public String followUser(@PathVariable int id, Model model){
         model.addAttribute("userList", postRepository.findAllByUserId(id));
         return "myfriends";
     }
-/*    FOLLOW*/
+/*    Follow another user*/
 
+    /*    Comment on a post*/
+    @RequestMapping("/comment/{id}")
+    public String commentPost(@PathVariable int id, Model model){
+        Post post=postRepository.findOne(id);
+        model.addAttribute("post",post);
+        return "postz";
+    }
+/*    Comment on a post*/
 
 
 }

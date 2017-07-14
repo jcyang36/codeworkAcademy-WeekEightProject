@@ -10,6 +10,7 @@
     <title>Users</title>
 </head>
 <body>
+<th:block th:replace="base :: navbar"></th:block>
 <br /><br />
 
 
@@ -21,9 +22,9 @@
 
             <div class="col-md-3">
 
-                <a th:utext="${friend.username}"></a>
-                <a th:href="'/follow/'+${friend.id}" class = "btn btn-success">Follow</a>
-
+                <form><a th:utext="${friend.username}"></a>
+                    <input type="checkbox" />Follow
+                </form>
             </div>
             <!---  FOLLOW-->
 

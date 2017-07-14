@@ -11,16 +11,28 @@
         <link rel=”stylesheet” href=”//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css”/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
 
+
+
+
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  </th:block>
+
+
+        <style>
+      .navbar{position:fixed;
+      }
+
+  </style>
+    </th:block>
+
 
         <title>Meme Maker</title>
 </head>
 <body>
-<div class="navbar-wrapper" th:fragment="navbar">
+<nav class="navbar navbar-ct-blue navbar-fixed-top navbar-transparent" role="navigation" th:fragment ="navbar">
+
     <div class="container">
-        <nav class="navbar navbr-ct-blue navbar-static-top" >
+
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -36,7 +48,13 @@
 
                         <th:block sec:authorize="isAnonymous()">
                             <li><a href="/login"><h3>Login</h3></a></li>
-                            <li><a href="/register"><h3>Register</h3></a></li>
+
+                            <li>
+                                <a href="/register">
+
+                                    <h3>Account</h3>
+                                </a>
+                            </li>
                         </th:block>
 
                         <th:block sec:authorize="isAuthenticated()">
@@ -52,9 +70,10 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+
     </div>
-</div>
+
+</nav>
 <!--================================================== &ndash;&gt;-->
 
 <div class="container">

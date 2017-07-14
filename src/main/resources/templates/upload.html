@@ -11,8 +11,9 @@
     </style>
 </head>
 <body>
-<br/><br/>
 <th:block th:replace="base :: navbar"></th:block>
+<br/><br/>
+
 <div class="container">
     <h3>Upload</h3>
     <form th:object="${photo}" method="POST" action="/upload" enctype="multipart/form-data">
@@ -26,7 +27,7 @@
     </div>
 
 <div class="row">
-    <a th:href="@{'/makepost/1'}">
+    <a th:href="@{'/makepost/'+${sizedimage.imagename}}">
         <div class ="photo"  th:utext="${sizedimageurl}">
         </div>
     </a>
