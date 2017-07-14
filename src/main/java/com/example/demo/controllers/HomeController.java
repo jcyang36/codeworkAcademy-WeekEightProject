@@ -212,9 +212,6 @@ public class HomeController {
 
 
 
-     /* @RequestMapping("/showposts/sepia")
-    public String showsepia(@RequestParam("sepia")){
-    }*/
 
 
     @RequestMapping("/myfriends")
@@ -227,7 +224,13 @@ public class HomeController {
         return "myfriends";
     }
 
-
+/*    FOLLOW  */
+    @RequestMapping("/follow/{id}")
+    public String followUser(@PathVariable int id, Model model){
+        model.addAttribute("userList", postRepository.findAllByUserId(id));
+        return "myfriends";
+    }
+/*    FOLLOW*/
 
 
 
