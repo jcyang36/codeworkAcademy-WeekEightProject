@@ -26,12 +26,28 @@
         <input type="file" name="file"/><br/><br/>
         <label>Caption</label>
         <input type="text" name="caption" th:field="*{caption}"/><br/>
+
+        <select th:field="*{value}">
+            <div>
+                <option value="0">No filter</option>
+                <option value="1">Sepia</option>
+                <option value="2">Pixelate</option>
+                <option value="3">Red</option>
+            </div>
+        </select>
+
         <input type="submit" value="Submit"/>
+      <a th:href = "@{'/makepost/'+ ${photo.id}}">
+            <div class ="photo"  th:utext="${photo.photosrc}">
+            </div>
+        </a>
+
+
     </form>
 
 
 
-    <div th:if="${message}">
+   <!-- <div th:if="${message}">
         <h3 th:text="${message}"/><br/><br/>
     </div>
 
@@ -73,8 +89,8 @@
             </a>
 
         </div>
-        </th:block>
-    </div>
+
+    </div>-->
 
 </div>
 </div> <!-----Container-->

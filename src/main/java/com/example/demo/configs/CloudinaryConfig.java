@@ -32,7 +32,22 @@ public class CloudinaryConfig {
     }
     public String createUrl(String name, int width, int height, String action, String effect){
         return cloudinary.url()
-                .transformation(new Transformation().width(width).height(height).effect(effect).border("2px_solid_black").crop(action))
+                .transformation(new Transformation().width(width).height(height).effect(effect).chain().border("2px_solid_black").crop(action))
+                .imageTag(name);
+    }
+    public String createSepiaUrl(String name, int width, int height, String action){
+        return cloudinary.url()
+                .transformation(new Transformation().width(width).height(height).chain().effect("sepia").chain().border("2px_solid_black").crop(action))
+                .imageTag(name);
+    }
+    public String createPixelateUrl(String name, int width, int height, String action){
+        return cloudinary.url()
+                .transformation(new Transformation().width(width).height(height).chain().effect("pixelate").chain().border("2px_solid_black").crop(action))
+                .imageTag(name);
+    }
+    public String createRedUrl(String name, int width, int height, String action){
+        return cloudinary.url()
+                .transformation(new Transformation().width(width).height(height).chain().effect("red:50").chain().border("2px_solid_black").crop(action))
                 .imageTag(name);
     }
 }
