@@ -95,12 +95,42 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/upload")
+   /* @GetMapping("/upload")
     public String uploadForm(Model model){
         model.addAttribute("photo", new Photo());
         return "upload";
+    }*/
+
+    @GetMapping("/upload1")
+    public String uploadForm(Model model){
+        model.addAttribute("photo", new Photo());
+        return "uploadonetwo";
     }
-    @PostMapping("/upload")
+
+    @PostMapping("/upload1")
+    public String singleImageUpload1(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, @ModelAttribute Photo photo, Model model){
+        if (file.isEmpty()){
+            model.addAttribute("message","Please select a file to upload");
+            return "uploadonetwo";
+        }
+        try {
+            Map uploadResult =  cloudc.upload(file.getBytes(), ObjectUtils.asMap("resourcetype", "auto"));
+            model.addAttribute("imageurl", uploadResult.get("url"));
+            String filename = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
+            photo.setPhotoname(filename);
+            String photosrc=  cloudc.createUrl(filename,300,400, "fill","saturation:0");
+            photo.setPhotosrc(photosrc);
+            model.addAttribute("sizedimage", photo);
+            photoRepository.save(photo);
+
+        } catch (IOException e){
+            e.printStackTrace();
+            model.addAttribute("message", "Sorry I can't upload that!");
+        }
+        return "uploadonetwo";
+    }
+
+    @PostMapping("/upload2")
     public String singleImageUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, @ModelAttribute Photo photo, Model model){
         if (file.isEmpty()){
             model.addAttribute("message","Please select a file to upload");
@@ -108,30 +138,30 @@ public class HomeController {
         }
         try {
             Map uploadResult =  cloudc.upload(file.getBytes(), ObjectUtils.asMap("resourcetype", "auto"));
-
             model.addAttribute("imageurl", uploadResult.get("url"));
             String filename = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
-            model.addAttribute("sizedimageurl", cloudc.createUrl(filename,300,400, "fill", "saturation:0"));
             photo.setPhotoname(filename);
-            photo.setPhotosrc((String)  cloudc.createUrl(filename,300,400, "fill","saturation:0"));
+            String photosrc=  cloudc.createUrl(filename,300,400, "fill","saturation:0");
+            photo.setPhotosrc(photosrc);
+            model.addAttribute("sizedimage", photo);
             photoRepository.save(photo);
             Photo photo1=new Photo();
             photo1.setPhotoname(filename+"sepia");
-            model.addAttribute("sepiaimageurl", cloudc.createUrl(filename,300,400, "fill", "sepia"));
-            String photosrc=cloudc.createUrl(filename,300,400, "fill", "sepia");
+            photosrc=cloudc.createUrl(filename,300,400, "fill", "sepia");
             photo1.setPhotosrc(photosrc);
+            model.addAttribute("sepiaimage", photo1);
             photoRepository.save(photo1);
             Photo photo2=new Photo();
             photo2.setPhotoname(filename+"pixelate");
-            model.addAttribute("pixelateimageurl", cloudc.createUrl(filename,300,400, "fill", "pixelate"));
             photosrc=cloudc.createUrl(filename,300,400, "fill", "pixelate");
             photo2.setPhotosrc(photosrc);
+            model.addAttribute("pixelateimage", photo2);
             photoRepository.save(photo2);
             Photo photo3 = new Photo();
             photo3.setPhotoname(filename+"red");
-            model.addAttribute("redimageurl", cloudc.createUrl(filename,300,400, "fill", "red:50"));
             photosrc= cloudc.createUrl(filename,300,400, "fill", "red:50");
             photo3.setPhotosrc(photosrc);
+            model.addAttribute("redimage", photo3);
             photoRepository.save(photo3);
         } catch (IOException e){
             e.printStackTrace();
@@ -142,18 +172,19 @@ public class HomeController {
 
 
 
-    @GetMapping("/makepost")
+    /*    @GetMapping("/makepost")
     public String postMaker(Model model) {
         model.addAttribute("post", new Post());
-        /*model.addAttribute("photos", photoRepository.findAll());*/
+        model.addAttribute("photos", photoRepository.findAll());
 
         return "mypost";
-    }
-    @RequestMapping("/makepost/{id}")
-    public String postform(@PathVariable("id") int id, Model model)
+    }*/
+
+    @RequestMapping("/makepost/{photoname}")
+    public String postform(@PathVariable("photoname") String photoname, Model model)
     {
         
-        Photo img=photoRepository.findOne(id);
+        Photo img=photoRepository.findTop1ByPhotoname(photoname);
         Post post=new Post();
         post.setImageUrl(img.getPhotosrc());
         model.addAttribute("post", post);
