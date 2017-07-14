@@ -7,7 +7,7 @@ import java.util.Set;
  * Created by student on 7/12/17.
  */
 @Entity
-public class Action {
+public class Comment {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
