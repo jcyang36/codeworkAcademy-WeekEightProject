@@ -152,7 +152,7 @@ public class HomeController {
     @RequestMapping("/makepost/{id}")
     public String postform(@PathVariable("id") int id, Model model)
     {
-        
+
         Photo img=photoRepository.findOne(id);
         Post post=new Post();
         post.setImageUrl(img.getPhotosrc());

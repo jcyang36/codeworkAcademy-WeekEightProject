@@ -56,6 +56,8 @@ public class User {
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
+
+
     public User(String email, String password, boolean enabled, String username) {
         this.email = email;
         this.password = password;
@@ -63,6 +65,8 @@ public class User {
         this.enabled = enabled;
         this.username = username;
     }
+
+
 
     public User() {
     }
