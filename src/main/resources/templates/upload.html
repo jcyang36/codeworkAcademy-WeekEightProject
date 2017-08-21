@@ -16,18 +16,43 @@
 
 <div class="container">
     <h3>Upload</h3>
-    <form th:object="${photo}" method="POST" action="/upload" enctype="multipart/form-data">
+    <!--<form th:object="${photo}" method="POST" action="/upload" enctype="multipart/form-data">
         <input type="file" name="file"/><br/><br/>
         <label>Caption</label>
         <input type="text" name="caption" th:field="*{caption}"/><br/>
         <input type="submit" value="Submit"/>
+    </form>   -->
+    <form th:object="${photo}" method="POST" action="/upload2" enctype="multipart/form-data">
+        <input type="file" name="file"/><br/><br/>
+        <label>Caption</label>
+        <input type="text" name="caption" th:field="*{caption}"/><br/>
+
+        <select th:field="*{value}">
+            <div>
+                <option value="0">No filter</option>
+                <option value="1">Sepia</option>
+                <option value="2">Pixelate</option>
+                <option value="3">Red</option>
+            </div>
+        </select>
+
+        <input type="submit" value="Submit"/>
+      <a th:href = "@{'/makepost/'+ ${photo.id}}">
+            <div class ="photo"  th:utext="${photo.photosrc}">
+            </div>
+        </a>
+
+
     </form>
-    <div th:if="${message}">
+
+
+
+   <!-- <div th:if="${message}">
         <h3 th:text="${message}"/><br/><br/>
     </div>
 
 <div class="row">
-    <a th:href="@{'/makepost/'+${sizedimage.imagename}}">
+    <a th:href="@{'/makepost/'+${sizedimage.photoname}}">
         <div class ="photo"  th:utext="${sizedimageurl}">
         </div>
     </a>
@@ -41,7 +66,7 @@
 
             <div class="col-md-3">
 
-                    <a th:href="@{'/makepost/2'}">
+                    <a th:href="@{'/makepost/'+${sepiaimage.photoname}}">
                         <div class ="photo"  th:utext="${sepiaimageurl}">
                         </div>
                     </a>
@@ -50,7 +75,7 @@
             </div>
         <div class="col-md-3">
 
-            <a th:href="@{'/makepost/3'}">
+            <a th:href="@{'/makepost/'+${pixelateimage.photoname}}">
                 <div class ="photo"  th:utext="${pixelateimageurl}">
                 </div>
             </a>
@@ -58,14 +83,14 @@
         </div>
         <div class="col-md-3">
 
-            <a th:href="@{'/makepost/4'}">
+            <a th:href="@{'/makepost/'+${redimage.photoname}}">
                 <div class ="photo"  th:utext="${redimageurl}">
                 </div>
             </a>
 
         </div>
-        </th:block>
-    </div>
+
+    </div>-->
 
 </div>
 </div> <!-----Container-->

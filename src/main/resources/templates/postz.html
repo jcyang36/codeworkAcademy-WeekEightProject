@@ -52,13 +52,16 @@
 <th:block th:replace="base :: navbar"></th:block>
 <br/><br/>
 
-
+<br/><br/>
 
 
         <th:block th:utext="${post.imageUrl}"></th:block>
-        <form>
+        <form  th:action = "@{/comment}" method ="POST">
         <input id="check1" type="checkbox"/>
-        <label for="check1">Like</label>
+        <label for="check1">Like</label> <br/>
+            Comment:     <input type="text" name = "comment" size="50" /><br/><br/>
+            <input type = "submit" name ="Submit"/>
+
         </form>
 
 </body>

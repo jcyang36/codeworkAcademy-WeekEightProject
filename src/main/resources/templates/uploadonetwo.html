@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org " xmlns:sec="www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="base :: head"></th:block>
+    <style>
+        #photo {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="base :: navbar"></th:block>
+<br/><br/>
+
+<div class="container">
+    <h3>Upload</h3>
+    <form th:object="${photo}" method="POST" action="/upload2" enctype="multipart/form-data">
+        <input type="file" name="file"/><br/><br/>
+        <label>Caption</label>
+        <input type="text" name="caption" th:field="*{caption}"/><br/>
+
+        <label>Filter</label>
+        <select th:field="*{value}">
+            <div>
+                <option value="0">No filter</option>
+                <option value="1">Sepia</option>
+                <option value="2">Pixelate</option>
+                <option value="3">Red</option>
+            </div>
+        </select>
+<br/>
+        <br/>
+        <input type="submit" value="Submit"/>
+    </form>
+    <div th:if="${message}">
+        <h3 th:text="${message}"/><br/><br/>
+    </div>
+
+
+
+
+
+
+
+
+</div> <!-----Container-->
+
+</body>
+<th:block th:replace="base :: footlinks"></th:block>
+</html>

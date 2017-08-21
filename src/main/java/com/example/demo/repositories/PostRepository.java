@@ -12,4 +12,5 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
     public Iterable<Post> findAllByUserId(int userId);
    public List<Post> findTop1ByUserIdOrderByIdDesc(int userId);
 
+
 }
