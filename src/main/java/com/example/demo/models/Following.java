@@ -26,7 +26,6 @@ public class Following {
         this.personid = personid;
     }
 
-
     public Long getFollowingId(){
         return followingId;
     }
